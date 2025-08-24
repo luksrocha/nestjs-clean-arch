@@ -1,16 +1,12 @@
+import { UserDataBuilder } from '@/users/testing/helpers/user-data-builder';
 import { UserEntity, UserProps } from '../../user.entity';
-import { faker } from '@faker-js/faker';
 
 describe('UserEntity unit tests', () => {
    let props: UserProps;
    let sut: UserEntity;
 
    beforeEach(() => {
-      props = {
-         name: faker.person.fullName(),
-         email: faker.internet.email(),
-         password: faker.internet.password(),
-      };
+      props = UserDataBuilder({});
 
       sut = new UserEntity(props);
    });
@@ -28,11 +24,32 @@ describe('UserEntity unit tests', () => {
       expect(sut.name).toBe(props.name);
    });
 
+   it('Setter of name field', () => {
+      sut['name'] = 'new name';
+      expect(sut.name).toBe('new name');
+   });
+
    it('Getter of email field', () => {
       expect(sut.email).toBe(props.email);
    });
 
    it('Getter of password field', () => {
       expect(sut.password).toBe(props.password);
+   });
+
+   it('Setter of password field', () => {
+      sut['password'] = 'new password';
+      expect(sut.password).toBe('new password');
+   });
+
+   it('Should update a user name and password', () => {
+      expect(sut.name).toBe(props.name);
+      expect(sut.password).toBe(props.password);
+
+      sut.updateName('new name');
+      expect(sut.name).toBe('new name');
+
+      sut.updatePassword('new password');
+      expect(sut.password).toBe('new password');
    });
 });
