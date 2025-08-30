@@ -1,6 +1,6 @@
 export class NotFoundError extends Error {
    constructor(public message: string) {
-      super('Entity Validation Error');
+      super(message);
       this.name = 'NotFoundError';
    }
 }
